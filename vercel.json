@@ -1,0 +1,5 @@
+{
+  "installCommand": "python3 -m pip install pygbag",
+  "buildCommand": "python3 -m pygbag --build .",
+  "outputDirectory": "build/web"
+}
