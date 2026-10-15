@@ -3,6 +3,43 @@ import pygame
 import math
 import random
 
+# ==========================================
+# UNIT 2 MATH & AI EXPLANATION
+# ==========================================
+# VECTORS:
+# The player, zombies and bullets all use pygame.Vector2 for position and velocity.
+#
+# DISTANCE:
+# Used for bullets hitting zombies, zombies hitting the player, and the zombie
+# detection range. Zombies give up when you are 1.5x their detection range away.
+#
+# NORMALIZATION:
+# Bullets use direction.normalize() * BULLET_SPEED. Zombies normalize the vector
+# to the player so they move at their own speed no matter how far away you are.
+#
+# ANGLES / SINE / COSINE:
+# The player turns toward the mouse with atan2 and forward = (cos, -sin).
+# Chasing zombies wobble left and right using math.sin.
+#
+# VELOCITY AND ACCELERATION:
+# The player uses WASD -> acceleration -> velocity, with DRAG and a max speed
+# (higher when sprinting). Zombies speed up a little every frame until they
+# reach their top speed.
+# Lunge: the zombie adds the lunge acceleration for the first half and
+# subtracts it for the second half, so it shoots forward then stops.
+#
+# DOT PRODUCT:
+# Zombie field of view. forward.dot(to_player) > FOV_THRESHOLD means the
+# player is in front of the zombie.
+#
+# AI DECISION-MAKING:
+# Zombies have the states WANDER, CHASE, LUNGE and REST.
+# Perception: distance to player + dot product.
+# Decision: close enough AND in front -> CHASE (or a 10% chance to LUNGE first),
+# LUNGE -> REST -> CHASE, too far away -> WANDER.
+# Action: walk around randomly, lunge, or run at the player and attack.
+# ==========================================
+
 # Screen
 WIDTH = 1000
 HEIGHT = 700
